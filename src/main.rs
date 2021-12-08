@@ -109,7 +109,7 @@ fn main() {
     //println!("{:?}", kmer_seq );
     let distance = jaccard(kmer_seq, kmer_ref);
     
-    println!("len1\tlen2\tintersection\tunion\tjaccard\tSD\tcontainment");
+    println!("len_query\tlen_ref\tintersection\tunion\tjaccard\tSD\tcontainment");
     println!("{}\t{}\t{}\t{}\t{}\t{}\t{}", distance[0], distance[1], distance[2], distance[3], distance[4], distance[5], distance[6]);
 
 }
