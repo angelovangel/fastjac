@@ -24,7 +24,7 @@ If the cardinality of the k-mers in **A** is smaller than in **B** then this is 
 
 ## Install
 
-I provide precompiled binaries for linux only [here](https://github.com/angelovangel/fastkmers/releases/download/v0.1.0/fastjac), but it is simple to compile and run:
+I provide precompiled binaries for linux only [here](https://github.com/angelovangel/fastjac/releases/download/v0.1.0/fastjac), but it is simple to compile and run:
 
 ```bash
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
