@@ -20,11 +20,11 @@ This command line program takes as inputs two fastq/fasta file and a k-mer size 
 - Containment - fraction of the k-mers in the query which are found in the reference.
 <img src="https://render.githubusercontent.com/render/math?math=\Large \frac{|A \cap B| }{ |A| }">
 
-If the cardinality of the k-mers in |A| is smaller than in |B| then this is the same as the [overlap coefficient](https://en.wikipedia.org/wiki/Overlap_coefficient).
+If the cardinality of the k-mers in **A** is smaller than in **B** then this is the same as the [overlap coefficient](https://en.wikipedia.org/wiki/Overlap_coefficient).
 
 ## Install
 
-I provide precompiled binaries for linux only [here](https://github.com/angelovangel/fastkmers/releases/download/v0.1.2/fastkmers), but it is simple to compile and run:
+I provide precompiled binaries for linux only [here](https://github.com/angelovangel/fastkmers/releases/download/v0.1.0/fastjac), but it is simple to compile and run:
 
 ```bash
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
