@@ -93,6 +93,9 @@ fn main() {
     while let Some(record) = records_q.iter_record().unwrap() {
 
         let query_str = record.seq();
+        if query_str.len() < k {
+                continue; // skip if query is shorter than k
+            }
         for c in 0..query_str.len() - k + 1 {
             let subseq = &query_str[c..c + k];
         
