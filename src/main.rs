@@ -28,33 +28,41 @@ fn main() {
     .about("get various kmer distance metrics (Jaccard, Overlap, Sørensen-Dice) between fastq/fasta files")
 
     .arg(Arg::with_name("kmer")
-    .long("kmer")
-    .short("k")
-    .required(true)
-    .takes_value(true)
-    .help("k-mer size to use"))
+        .long("kmer")
+        .short("k")
+        .required(true)
+        .takes_value(true)
+        .help("k-mer size to use"))
+
+    .arg(Arg::with_name("nth")
+        .required(false)
+        .long("nth")
+        .short("n")
+        .takes_value(true)
+        .default_value("1")
+        .help("Calculate every nth record. Used to subsample large fastq files"))
     
     .arg(Arg::with_name("query")
-    .long("query")
-    .short("q")
-    .takes_value(true)
-    .required(true)
-    .help("Path to query fastx file"))
+        .long("query")
+        .short("q")
+        .takes_value(true)
+        .required(true)
+        .help("Path to query fastx file"))
     
     .arg(Arg::with_name("valid")
-    .long("valid")
-    .short("v")
-    .required(false)
-    .takes_value(false)
-    .help("Remove k-mers with ambigous bases, e.g. only the ones containing ATGC are retained"))
-    //.index(1))
+        .long("valid")
+        .short("v")
+        .required(false)
+        .takes_value(false)
+        .help("Remove k-mers with ambigous bases, e.g. only the ones containing ATGC are retained"))
+        //.index(1))
     
     .arg(Arg::with_name("ref")
-    .long("ref")
-    .short("r")
-    .takes_value(true)
-    .required(true)
-    .help("Path to reference fastx file"))
+        .long("ref")
+        .short("r")
+        .takes_value(true)
+        .required(true)
+        .help("Path to reference fastx file"))
 
     //.index(2))
     .get_matches();
@@ -66,12 +74,24 @@ fn main() {
 
     let mut kmer_seq: HashSet<String> = HashSet::new();
     let mut kmer_ref: HashSet<String> = HashSet::new();
+
+    let nth = argmatches.value_of("nth")
+        .unwrap()
+        .trim()
+        .parse::<i32>()
+        .expect("nth argument not valid!");
  
     // process ref
     let file2 = argmatches.value_of("ref").unwrap().to_string();
     let mut records_r = parse_path(file2).unwrap();
+    let mut recn_ref: i32 = 0;
 
     while let Some(record) = records_r.iter_record().unwrap() {
+        recn_ref += 1;
+        if recn_ref != nth {
+            continue;
+        }
+        recn_ref = 0;
 
         let ref_str = record.seq();
         if ref_str.len() < k {
@@ -92,8 +112,15 @@ fn main() {
     // process query
     let file1 = argmatches.value_of("query").unwrap().to_string();
     let mut records_q = parse_path(file1).unwrap();    
+    let mut recn_query: i32 = 0;
 
     while let Some(record) = records_q.iter_record().unwrap() {
+
+        recn_query += 1;
+        if recn_query != nth {
+            continue;
+        }
+        recn_query = 0;
 
         let query_str = record.seq();
         if query_str.len() < k {
