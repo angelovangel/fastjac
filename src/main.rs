@@ -74,6 +74,9 @@ fn main() {
     while let Some(record) = records_r.iter_record().unwrap() {
 
         let ref_str = record.seq();
+        if ref_str.len() < k {
+                continue; // skip if ref is shorter than k
+            }
         for c in 0..ref_str.len() - k + 1 {
             let subseq = &ref_str[c..c + k];
             if argmatches.is_present("valid") {
